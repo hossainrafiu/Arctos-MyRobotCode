@@ -11,5 +11,5 @@ public interface Task {
      * 
      * @param robot The robot that is doing the task
      */
-    public void doIt(Robot robot);
+    public void doIt(MainRobot robot);
 }

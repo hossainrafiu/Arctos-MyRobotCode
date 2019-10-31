@@ -1,10 +1,7 @@
 package com.arctos6135.training.quiz.robot;
+
 import com.arctos6135.training.quiz.robot.sensors.*;
 import com.arctos6135.training.quiz.robot.actuators.*;
-
-public enum State{
-    ENABLED, DISABLED, UNKNOWN;
-}
 
 public class MainRobot extends Robot{
 
@@ -27,14 +24,7 @@ public class MainRobot extends Robot{
 
     @Override
     public double getHeading(){
-        double heading = gyro.getHeading();
-        while (heading < 0){
-            heading += 360;
-        }
-        while (heading > 360){
-            headidng -= 360;
-        }
-        return heading;
+        return gyro.getHeading()%360;
     }
 
     public State readState(){
@@ -43,6 +33,21 @@ public class MainRobot extends Robot{
 
     public void writeState(State state){
         this.state = state;
+    }
+    
+    /**
+     * Performs a task.
+     * 
+     * @param task The task to do
+     */
+    public void doTask(Task task) {
+        try {
+            task.doIt(this);
+            System.out.println("Task successfully done!");
+        } catch (TaskExecutionException e) {
+            System.err.println("Oh no, task execution failed!");
+            e.printStackTrace();
+        }
     }
 
 }

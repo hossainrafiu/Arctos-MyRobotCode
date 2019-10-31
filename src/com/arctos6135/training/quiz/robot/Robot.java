@@ -63,19 +63,4 @@ public abstract class Robot {
 
         System.out.println(name + " is doing something cool!");
     }
-
-    /**
-     * Performs a task.
-     * 
-     * @param task The task to do
-     */
-    public void doTask(Task task) {
-        try {
-            task.doIt(this);
-            System.out.println("Task successfully done!");
-        } catch (TaskExecutionException e) {
-            System.err.println("Oh no, task execution failed!");
-            e.printStackTrace();
-        }
-    }
 }

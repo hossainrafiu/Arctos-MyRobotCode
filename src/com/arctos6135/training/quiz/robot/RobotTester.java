@@ -1,9 +1,5 @@
 package com.arctos6135.training.quiz.robot;
 
-import com.arctos6135.training.quiz.robot.*;
-import com.arctos6135.training.quiz.robot.MainRobot;
-import com.arctos6135.training.quiz.robot.TaskExecutionException;
-
 public class RobotTester{
     
     public static void doSomething(Robot robot){
@@ -17,11 +13,15 @@ public class RobotTester{
     public static void main(String[] args) {
         MainRobot robot1 = new MainRobot();
         doSomething(robot1);
-        if (robot1.readState() == State.ENABLED){
-            robot1.doTask(robot -> System.out.println("helloworld"));
-        }
-        else if (robot1.readState() == State.UNKNOWN){
-            throw new TaskExecutionException("The State of the Robot is UNKNOWN!");
-        }
+        robot1.writeState(State.ENABLED);
+        robot1.doTask(robot -> {
+            if(robot.readState() == State.ENABLED){
+                robot.leftMotor.setSpeed(1.0);
+                robot.rightMotor.setSpeed(-1.0);
+            }
+            else if(robot.readState() == State.UNKNOWN){
+                throw new TaskExecutionException("The State of the Robot is UNKNONW!");
+            }
+        });
     }
 }
